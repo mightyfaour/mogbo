@@ -1,4 +1,4 @@
-package africa.semicolon.eventbrite.data.repository;
+package africa.semicolon.eventbrite.data.repositories;
 
 import africa.semicolon.eventbrite.data.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -9,5 +9,9 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
 
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
+
+    boolean existsByEmail(String email);
+
+    Optional<User> findUserByEmail(String emsil);
 }

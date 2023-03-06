@@ -1,4 +1,4 @@
-package africa.semicolon.eventbrite.dto.request;
+package africa.semicolon.eventbrite.dto.requests;
 
 
 import lombok.AllArgsConstructor;

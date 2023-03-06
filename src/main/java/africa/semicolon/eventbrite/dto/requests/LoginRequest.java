@@ -1,8 +1,7 @@
-package africa.semicolon.eventbrite.dto.request;
+package africa.semicolon.eventbrite.dto.requests;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
 @Data
 public class LoginRequest {
 

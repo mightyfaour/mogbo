@@ -1,15 +1,17 @@
 package africa.semicolon.eventbrite.services;
 
 import africa.semicolon.eventbrite.data.model.User;
-import africa.semicolon.eventbrite.data.repository.UserRepository;
-import africa.semicolon.eventbrite.dto.request.LoginRequest;
-import africa.semicolon.eventbrite.dto.request.RegisterUserRequest;
-import africa.semicolon.eventbrite.dto.responses.LoginResponse;
+import africa.semicolon.eventbrite.data.repositories.UserRepository;
+import africa.semicolon.eventbrite.dto.requests.CreatePartyRequest;
+import africa.semicolon.eventbrite.dto.requests.LoginRequest;
+import africa.semicolon.eventbrite.dto.requests.RegisterUserRequest;
+import africa.semicolon.eventbrite.dto.responses.CreatePartyResponse;
+import africa.semicolon.eventbrite.dto.responses.LoginUserResponse;
 import africa.semicolon.eventbrite.dto.responses.RegisterUserResponse;
+import africa.semicolon.eventbrite.exception.UserDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
@@ -21,12 +23,15 @@ public class UserServicesImpl implements UserService {
 
     @Override
     public RegisterUserResponse registerUser(RegisterUserRequest request) {
+//        User user = new User();
+
+//        map user
+
         User user = new User();
         user.setEmail(request.getEmail());
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setPassword(request.getPassword());
-
         User savedUser = userRepository.save(user);
         RegisterUserResponse response = new RegisterUserResponse();
         response.setEmail(savedUser.getEmail());
@@ -36,10 +41,10 @@ public class UserServicesImpl implements UserService {
     }
 
     @Override
-    public LoginResponse login(LoginRequest request) {
+    public LoginUserResponse login(LoginRequest request) {
 
-        User user = userRepository.findByEmail(request.getEmail());
-        if (user == null) {
+        Optional<User> user = userRepository.findByEmail(request.getEmail());
+        if (!user.isPresent()) {
             throw new IllegalArgumentException("user does not exists");
         }
         if (!request.getPassword().equals(user.getPassword()) ) {
@@ -47,7 +52,7 @@ public class UserServicesImpl implements UserService {
         }
 //        if(user.isPresent()){
 //            if (request.getPassword().equals(user.get().getPassWord())){
-               LoginResponse response = new LoginResponse();
+               LoginUserResponse response = new LoginUserResponse();
                 response.setMessage("LogIn SUCCESSFUL!");
                // return response;
 //            }
@@ -55,4 +60,16 @@ public class UserServicesImpl implements UserService {
         //  throw  new NullPointerException("not found");
         return response;
     }
+
+    @Override
+    public CreatePartyResponse addParty(CreatePartyRequest request) throws UserDoesNotExistException {
+        return null;
+    }
+
+    @Override
+    public RegisterUserResponse loginUser(RegisterUserRequest loginUserRequest) {
+        return null;
+    }
+
+
 }
